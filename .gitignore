@@ -1,0 +1,5 @@
+build/
+dist/
+pyNeVer.egg-info/
+experiments/CAV2021/data/MNIST/
+*.pyc
