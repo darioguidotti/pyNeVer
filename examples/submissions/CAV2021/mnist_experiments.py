@@ -10,14 +10,10 @@ import pynever.nodes as nodes
 mnist = dt.MNISTDataset()
 datas, targets = mnist.get_test_set()
 
-net_ids = ["A_NS_SET1.onnx", "A_NS_SET2.onnx", "A_NS_SET3.onnx",
-           "B_NS_SET1.onnx", "B_NS_SET2.onnx", "B_NS_SET3.onnx",
-           "A_Baseline_SET1.onnx", "A_Baseline_SET2.onnx", "A_Baseline_SET3.onnx",
-           "B_Baseline_SET1.onnx", "B_Baseline_SET2.onnx", "B_Baseline_SET3.onnx"]
-
-"""net_ids = ["Small_NS_SET1.onnx", "Small_NS_SET2.onnx", "Small_NS_SET3.onnx",
-           "Small_WP_SET1.onnx", "Small_WP_SET2.onnx", "Small_WP_SET3.onnx",
-           "Small_Baseline_SET1.onnx", "Small_Baseline_SET2.onnx", "Small_Baseline_SET3.onnx"]"""
+net_ids = ["A_NS_SET1", "A_NS_SET2", "A_NS_SET3",
+           "B_NS_SET1", "B_NS_SET2", "B_NS_SET3",
+           "A_Baseline_SET1", "A_Baseline_SET2", "A_Baseline_SET3",
+           "B_Baseline_SET1", "B_Baseline_SET2", "B_Baseline_SET3"]
 
 data_index = 10
 data = datas[data_index]
@@ -73,7 +69,7 @@ with open(master_log_file, "a") as master_log:
 
 for net_id in net_ids:
 
-    net_path = "mnist_nets/" + net_id
+    net_path = "mnist_nets/" + net_id + ".onnx"
     net = conv.ONNXConverter().to_neural_network(conv.ONNXNetwork(net_id, onnx.load(net_path)))
     assert isinstance(net, networks.SequentialNetwork)
     current_node = net.get_first_node()
