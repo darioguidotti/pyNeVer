@@ -3,3 +3,4 @@ dist/
 pyNeVer.egg-info/
 experiments/CAV2021/data/MNIST/
 *.pyc
+*.ipynb_checkpoints/
