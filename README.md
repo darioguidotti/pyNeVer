@@ -6,7 +6,7 @@ __pyNeVer__ is the corresponding python package providing all the main capabilit
 and can be easily installed using pip. The PyPI project page can be found at <https://pypi.org/project/pyNeVer/>
 whereas the github repository can be found at <https://github.com/darioguidotti/pyNeVer>.
 
-####REQUIREMENTS AND INSTALLATION
+#### REQUIREMENTS AND INSTALLATION
 Given the characteristcs of PyTorch and ONNX we were not able to setup an auto-installation for these packages.
 Therefore the user is required to install the torch, torchvision and onnx packages indipendently.
 Guides on how to install such packages can be found at:
@@ -16,10 +16,10 @@ Guides on how to install such packages can be found at:
 After the installation of the required packages __pyNeVer__ can be installed using the command:
 * _pip install pynever_
 
-####DOCUMENTATION
+#### DOCUMENTATION
 The documentation related to the __pyNeVer__ package can be found in the directory docs/pynever/ as html files.
 
-####SUPPORTED INPUTS
+#### SUPPORTED INPUTS
 At present the __pyNeVer__ package supports only the abstraction and verification of fully connected neural networks 
 with ReLU and Sigmoid activation functions. The training, pruning and conversion supports also batch normalization
 layers. A network with batchnorm layers following fully connected layers can be converted to a "pure" fully connected
@@ -33,7 +33,7 @@ At present the properties for the verification and abstraction of the networks m
 the specification which can be found in the documentation. Examples of the specification of the properties can be found
 in all the scripts in the directory examples/submissions/CAV2021/.
 
-####EXAMPLES
+#### EXAMPLES
 **NB: All the scripts should be executed INSIDE the related directory!**  
 
 * The directory examples/ contains some examples of application of the __pyNeVer__ package. In particular the 
