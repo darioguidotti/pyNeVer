@@ -94,6 +94,9 @@ class Star:
     ----------
     get_bounds()
         Function used to get the the upper and lower bounds of the n variables of the star.
+    check_if_empty()
+        Function used to check if the star corresponds to an empty set.
+
 
     &#34;&#34;&#34;
 
@@ -267,6 +270,10 @@ class StarSet(AbsElement):
 
 
 def intersect_with_halfspace(star: Star, coef_mat: Tensor, bias_mat: Tensor) -&gt; Star:
+    &#34;&#34;&#34;
+    Function which takes as input a Star and a halfspace defined by its coefficient matrix and bias vector and returns
+    the Star resulting from the intesection of the input Star with the halfspace.
+    &#34;&#34;&#34;
 
     new_center = star.center
     new_basis_matrix = star.basis_matrix
@@ -418,6 +425,11 @@ def __mixed_step_relu(abs_input: Set[Star], var_index: int, refinement_flag: boo
 
 def mixed_single_relu_forward(star: Star, neuron_relevance: bool, iqr_thresholding: bool, iqr_mult: float,
                               refinement_percentage: float) -&gt; (Set[Star], Tensor):
+    &#34;&#34;&#34;
+    Utility function for the management of the forward for AbsReLUNode. It is outside
+    the class scope since multiprocessing does not support parallelization with
+    function internal to classes.
+    &#34;&#34;&#34;
 
     temp_abs_input = {star}
     if star.check_if_empty():
@@ -516,14 +528,24 @@ def single_fc_forward(star: Star, weight: Tensor, bias: Tensor) -&gt; Set[Star]:
 
 
 def sig(x: float) -&gt; float:
+    &#34;&#34;&#34;
+    Utility function computing the logistic function of the input.
+    &#34;&#34;&#34;
     return 1.0 / (1.0 + math.exp(-x))
 
 
 def sig_fod(x: float) -&gt; float:
+    &#34;&#34;&#34;
+    Utility function computing the first order derivative of the logistic function of the input.
+    &#34;&#34;&#34;
     return math.exp(-x) / math.pow(1 + math.exp(-x), 2)
 
 
 def area_sig_triangle(lb: float, ub: float) -&gt; float:
+    &#34;&#34;&#34;
+    Utility function computing the area of the triangle defined by an upper bound and a lower bound on the
+    logistic function. In particular is the triangle composed by the two tangents and line passing by the two bounds.
+    &#34;&#34;&#34;
 
     x_p = (ub * sig_fod(ub) - lb * sig_fod(lb)) / (sig_fod(ub) - sig_fod(lb)) - \
           (sig(ub) - sig(lb)) / (sig_fod(ub) - sig_fod(lb))
@@ -661,6 +683,11 @@ def __approx_step_sigmoid(abs_input: Set[Star], var_index: int, approx_level: in
 
 
 def single_sigmoid_forward(star: Star, approx_levels: List[int]) -&gt; Set[Star]:
+    &#34;&#34;&#34;
+    Utility function for the management of the forward for AbsSigmoidNode. It is outside
+    the class scope since multiprocessing does not support parallelization with
+    function internal to classes.
+    &#34;&#34;&#34;
     tolerance = 0.01
     temp_abs_input = {star}
     for i in range(star.center.shape[0]):
@@ -672,7 +699,8 @@ def single_sigmoid_forward(star: Star, approx_levels: List[int]) -&gt; Set[Star]
 class RefinementState(abc.ABC):
     &#34;&#34;&#34;
     A class used for the internal control of the refinement strategies/heuristics applied in the abstraction refinement
-    step.
+    step. At present is not still used and it is just an abstract placeholder. It will be used in future
+    implementations.
     &#34;&#34;&#34;
     pass
 
@@ -698,7 +726,8 @@ class AbsLayerNode(abc.ABC):
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
 
     &#34;&#34;&#34;
 
@@ -727,7 +756,7 @@ class AbsLayerNode(abc.ABC):
     @abc.abstractmethod
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -775,7 +804,8 @@ class AbsReLUNode(AbsLayerNode):
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
     &#34;&#34;&#34;
 
     def __init__(self, identifier: str, ref_node: nodes.ReLUNode, neuron_relevance: bool = True,
@@ -818,7 +848,7 @@ class AbsReLUNode(AbsLayerNode):
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -886,7 +916,8 @@ class AbsFullyConnectedNode(AbsLayerNode):
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
     &#34;&#34;&#34;
 
     def __init__(self, identifier: str, ref_node: nodes.FullyConnectedNode):
@@ -932,7 +963,7 @@ class AbsFullyConnectedNode(AbsLayerNode):
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -964,7 +995,8 @@ class AbsSigmoidNode(AbsLayerNode):
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
     &#34;&#34;&#34;
 
     def __init__(self, identifier: str, ref_node: nodes.SigmoidNode, approx_levels: Union[int, List[int]] = None):
@@ -1017,7 +1049,7 @@ class AbsSigmoidNode(AbsLayerNode):
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -1052,7 +1084,8 @@ class AbsNeuralNetwork(abc.ABC):
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the AbsLayerNodes
-        to control the refinement component of the abstraction.
+        to control the refinement component of the abstraction. At present the function is just a placeholder
+        for future implementations.
 
     &#34;&#34;&#34;
 
@@ -1080,7 +1113,7 @@ class AbsNeuralNetwork(abc.ABC):
     @abc.abstractmethod
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -1122,7 +1155,8 @@ class AbsSeqNetwork(AbsNeuralNetwork):
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the AbsLayerNodes
-        to control the refinement component of the abstraction.
+        to control the refinement component of the abstraction. At present the function is just a placeholder for
+        future implementations.
 
     &#34;&#34;&#34;
 
@@ -1240,7 +1274,7 @@ class AbsSeqNetwork(AbsNeuralNetwork):
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -1261,12 +1295,17 @@ class AbsSeqNetwork(AbsNeuralNetwork):
 <span>def <span class="ident">area_sig_triangle</span></span>(<span>lb: float, ub: float) ‑> float</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Utility function computing the area of the triangle defined by an upper bound and a lower bound on the
+logistic function. In particular is the triangle composed by the two tangents and line passing by the two bounds.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def area_sig_triangle(lb: float, ub: float) -&gt; float:
+    &#34;&#34;&#34;
+    Utility function computing the area of the triangle defined by an upper bound and a lower bound on the
+    logistic function. In particular is the triangle composed by the two tangents and line passing by the two bounds.
+    &#34;&#34;&#34;
 
     x_p = (ub * sig_fod(ub) - lb * sig_fod(lb)) / (sig_fod(ub) - sig_fod(lb)) - \
           (sig(ub) - sig(lb)) / (sig_fod(ub) - sig_fod(lb))
@@ -1285,12 +1324,17 @@ class AbsSeqNetwork(AbsNeuralNetwork):
 <span>def <span class="ident">intersect_with_halfspace</span></span>(<span>star: <a title="pynever.strategies.abstraction.Star" href="#pynever.strategies.abstraction.Star">Star</a>, coef_mat: <a title="pynever.tensor.Tensor" href="../tensor.html#pynever.tensor.Tensor">Tensor</a>, bias_mat: <a title="pynever.tensor.Tensor" href="../tensor.html#pynever.tensor.Tensor">Tensor</a>) ‑> <a title="pynever.strategies.abstraction.Star" href="#pynever.strategies.abstraction.Star">Star</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Function which takes as input a Star and a halfspace defined by its coefficient matrix and bias vector and returns
+the Star resulting from the intesection of the input Star with the halfspace.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def intersect_with_halfspace(star: Star, coef_mat: Tensor, bias_mat: Tensor) -&gt; Star:
+    &#34;&#34;&#34;
+    Function which takes as input a Star and a halfspace defined by its coefficient matrix and bias vector and returns
+    the Star resulting from the intesection of the input Star with the halfspace.
+    &#34;&#34;&#34;
 
     new_center = star.center
     new_basis_matrix = star.basis_matrix
@@ -1307,13 +1351,20 @@ class AbsSeqNetwork(AbsNeuralNetwork):
 <span>def <span class="ident">mixed_single_relu_forward</span></span>(<span>star: <a title="pynever.strategies.abstraction.Star" href="#pynever.strategies.abstraction.Star">Star</a>, neuron_relevance: bool, iqr_thresholding: bool, iqr_mult: float, refinement_percentage: float) ‑> (typing.Set[<a title="pynever.strategies.abstraction.Star" href="#pynever.strategies.abstraction.Star">Star</a>], <class '<a title="pynever.tensor.Tensor" href="../tensor.html#pynever.tensor.Tensor">Tensor</a>'>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Utility function for the management of the forward for AbsReLUNode. It is outside
+the class scope since multiprocessing does not support parallelization with
+function internal to classes.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def mixed_single_relu_forward(star: Star, neuron_relevance: bool, iqr_thresholding: bool, iqr_mult: float,
                               refinement_percentage: float) -&gt; (Set[Star], Tensor):
+    &#34;&#34;&#34;
+    Utility function for the management of the forward for AbsReLUNode. It is outside
+    the class scope since multiprocessing does not support parallelization with
+    function internal to classes.
+    &#34;&#34;&#34;
 
     temp_abs_input = {star}
     if star.check_if_empty():
@@ -1397,12 +1448,15 @@ class AbsSeqNetwork(AbsNeuralNetwork):
 <span>def <span class="ident">sig</span></span>(<span>x: float) ‑> float</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Utility function computing the logistic function of the input.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sig(x: float) -&gt; float:
+    &#34;&#34;&#34;
+    Utility function computing the logistic function of the input.
+    &#34;&#34;&#34;
     return 1.0 / (1.0 + math.exp(-x))</code></pre>
 </details>
 </dd>
@@ -1410,12 +1464,15 @@ class AbsSeqNetwork(AbsNeuralNetwork):
 <span>def <span class="ident">sig_fod</span></span>(<span>x: float) ‑> float</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Utility function computing the first order derivative of the logistic function of the input.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sig_fod(x: float) -&gt; float:
+    &#34;&#34;&#34;
+    Utility function computing the first order derivative of the logistic function of the input.
+    &#34;&#34;&#34;
     return math.exp(-x) / math.pow(1 + math.exp(-x), 2)</code></pre>
 </details>
 </dd>
@@ -1452,12 +1509,19 @@ function internal to classes.</p></div>
 <span>def <span class="ident">single_sigmoid_forward</span></span>(<span>star: <a title="pynever.strategies.abstraction.Star" href="#pynever.strategies.abstraction.Star">Star</a>, approx_levels: List[int]) ‑> Set[<a title="pynever.strategies.abstraction.Star" href="#pynever.strategies.abstraction.Star">Star</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Utility function for the management of the forward for AbsSigmoidNode. It is outside
+the class scope since multiprocessing does not support parallelization with
+function internal to classes.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def single_sigmoid_forward(star: Star, approx_levels: List[int]) -&gt; Set[Star]:
+    &#34;&#34;&#34;
+    Utility function for the management of the forward for AbsSigmoidNode. It is outside
+    the class scope since multiprocessing does not support parallelization with
+    function internal to classes.
+    &#34;&#34;&#34;
     tolerance = 0.01
     temp_abs_input = {star}
     for i in range(star.center.shape[0]):
@@ -1532,7 +1596,8 @@ Function which takes an AbsElement and compute the corresponding output AbsEleme
 transformer.</p>
 <p>backward(RefinementState)
 Function which takes a reference to the refinement state and update both it and the state of the abstract
-transformer to control the refinement component of the abstraction.</p></div>
+transformer to control the refinement component of the abstraction. At present the function is just a
+placeholder for future implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1557,7 +1622,8 @@ transformer to control the refinement component of the abstraction.</p></div>
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
     &#34;&#34;&#34;
 
     def __init__(self, identifier: str, ref_node: nodes.FullyConnectedNode):
@@ -1603,7 +1669,7 @@ transformer to control the refinement component of the abstraction.</p></div>
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -1647,7 +1713,8 @@ Function which takes an AbsElement and compute the corresponding output AbsEleme
 transformer.</p>
 <p>backward(RefinementState)
 Function which takes a reference to the refinement state and update both it and the state of the abstract
-transformer to control the refinement component of the abstraction.</p></div>
+transformer to control the refinement component of the abstraction. At present the function is just a
+placeholder for future implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1673,7 +1740,8 @@ transformer to control the refinement component of the abstraction.</p></div>
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
 
     &#34;&#34;&#34;
 
@@ -1702,7 +1770,7 @@ transformer to control the refinement component of the abstraction.</p></div>
     @abc.abstractmethod
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -1727,7 +1795,7 @@ transformer to control the refinement component of the abstraction.</p></div>
 <span>def <span class="ident">backward</span></span>(<span>self, ref_state: <a title="pynever.strategies.abstraction.RefinementState" href="#pynever.strategies.abstraction.RefinementState">RefinementState</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Update the RefinementState.</p>
+<div class="desc"><p>Update the RefinementState. At present the function is just a placeholder for future implementations.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>ref_state</code></strong> :&ensp;<code><a title="pynever.strategies.abstraction.RefinementState" href="#pynever.strategies.abstraction.RefinementState">RefinementState</a></code></dt>
@@ -1740,7 +1808,7 @@ transformer to control the refinement component of the abstraction.</p></div>
 <pre><code class="python">@abc.abstractmethod
 def backward(self, ref_state: RefinementState):
     &#34;&#34;&#34;
-    Update the RefinementState.
+    Update the RefinementState. At present the function is just a placeholder for future implementations.
 
     Parameters
     ----------
@@ -1814,7 +1882,8 @@ Function which takes an AbsElement and compute the corresponding output AbsEleme
 of the network.</p>
 <p>backward(RefinementState)
 Function which takes a reference to the refinement state and update both it and the state of the AbsLayerNodes
-to control the refinement component of the abstraction.</p></div>
+to control the refinement component of the abstraction. At present the function is just a placeholder
+for future implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1844,7 +1913,8 @@ to control the refinement component of the abstraction.</p></div>
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the AbsLayerNodes
-        to control the refinement component of the abstraction.
+        to control the refinement component of the abstraction. At present the function is just a placeholder
+        for future implementations.
 
     &#34;&#34;&#34;
 
@@ -1872,7 +1942,7 @@ to control the refinement component of the abstraction.</p></div>
     @abc.abstractmethod
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -1895,7 +1965,7 @@ to control the refinement component of the abstraction.</p></div>
 <span>def <span class="ident">backward</span></span>(<span>self, ref_state: <a title="pynever.strategies.abstraction.RefinementState" href="#pynever.strategies.abstraction.RefinementState">RefinementState</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Update the RefinementState.</p>
+<div class="desc"><p>Update the RefinementState. At present the function is just a placeholder for future implementations.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>ref_state</code></strong> :&ensp;<code><a title="pynever.strategies.abstraction.RefinementState" href="#pynever.strategies.abstraction.RefinementState">RefinementState</a></code></dt>
@@ -1908,7 +1978,7 @@ to control the refinement component of the abstraction.</p></div>
 <pre><code class="python">@abc.abstractmethod
 def backward(self, ref_state: RefinementState):
     &#34;&#34;&#34;
-    Update the RefinementState.
+    Update the RefinementState. At present the function is just a placeholder for future implementations.
 
     Parameters
     ----------
@@ -1990,7 +2060,8 @@ Function which takes an AbsElement and compute the corresponding output AbsEleme
 transformer.</p>
 <p>backward(RefinementState)
 Function which takes a reference to the refinement state and update both it and the state of the abstract
-transformer to control the refinement component of the abstraction.</p></div>
+transformer to control the refinement component of the abstraction. At present the function is just a
+placeholder for future implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2033,7 +2104,8 @@ transformer to control the refinement component of the abstraction.</p></div>
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
     &#34;&#34;&#34;
 
     def __init__(self, identifier: str, ref_node: nodes.ReLUNode, neuron_relevance: bool = True,
@@ -2076,7 +2148,7 @@ transformer to control the refinement component of the abstraction.</p></div>
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -2166,7 +2238,8 @@ Function which takes an AbsElement and compute the corresponding output AbsEleme
 of the network.</p>
 <p>backward(RefinementState)
 Function which takes a reference to the refinement state and update both it and the state of the AbsLayerNodes
-to control the refinement component of the abstraction.</p></div>
+to control the refinement component of the abstraction. At present the function is just a placeholder for
+future implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2203,7 +2276,8 @@ to control the refinement component of the abstraction.</p></div>
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the AbsLayerNodes
-        to control the refinement component of the abstraction.
+        to control the refinement component of the abstraction. At present the function is just a placeholder for
+        future implementations.
 
     &#34;&#34;&#34;
 
@@ -2321,7 +2395,7 @@ to control the refinement component of the abstraction.</p></div>
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -2508,7 +2582,8 @@ Function which takes an AbsElement and compute the corresponding output AbsEleme
 transformer.</p>
 <p>backward(RefinementState)
 Function which takes a reference to the refinement state and update both it and the state of the abstract
-transformer to control the refinement component of the abstraction.</p></div>
+transformer to control the refinement component of the abstraction. At present the function is just a
+placeholder for future implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2535,7 +2610,8 @@ transformer to control the refinement component of the abstraction.</p></div>
 
     backward(RefinementState)
         Function which takes a reference to the refinement state and update both it and the state of the abstract
-        transformer to control the refinement component of the abstraction.
+        transformer to control the refinement component of the abstraction. At present the function is just a
+        placeholder for future implementations.
     &#34;&#34;&#34;
 
     def __init__(self, identifier: str, ref_node: nodes.SigmoidNode, approx_levels: Union[int, List[int]] = None):
@@ -2588,7 +2664,7 @@ transformer to control the refinement component of the abstraction.</p></div>
 
     def backward(self, ref_state: RefinementState):
         &#34;&#34;&#34;
-        Update the RefinementState.
+        Update the RefinementState. At present the function is just a placeholder for future implementations.
 
         Parameters
         ----------
@@ -2617,7 +2693,8 @@ transformer to control the refinement component of the abstraction.</p></div>
 </code></dt>
 <dd>
 <div class="desc"><p>A class used for the internal control of the refinement strategies/heuristics applied in the abstraction refinement
-step.</p></div>
+step. At present is not still used and it is just an abstract placeholder. It will be used in future
+implementations.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2625,7 +2702,8 @@ step.</p></div>
 <pre><code class="python">class RefinementState(abc.ABC):
     &#34;&#34;&#34;
     A class used for the internal control of the refinement strategies/heuristics applied in the abstraction refinement
-    step.
+    step. At present is not still used and it is just an abstract placeholder. It will be used in future
+    implementations.
     &#34;&#34;&#34;
     pass</code></pre>
 </details>
@@ -2666,7 +2744,9 @@ defining a set of constraints.</p>
 </dl>
 <h2 id="methods">Methods</h2>
 <p>get_bounds()
-Function used to get the the upper and lower bounds of the n variables of the star.</p></div>
+Function used to get the the upper and lower bounds of the n variables of the star.
+check_if_empty()
+Function used to check if the star corresponds to an empty set.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2704,6 +2784,9 @@ Function used to get the the upper and lower bounds of the n variables of the st
     ----------
     get_bounds()
         Function used to get the the upper and lower bounds of the n variables of the star.
+    check_if_empty()
+        Function used to check if the star corresponds to an empty set.
+
 
     &#34;&#34;&#34;
 

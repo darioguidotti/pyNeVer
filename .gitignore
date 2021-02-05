@@ -1,6 +1,7 @@
 build/
 dist/
 pyNeVer.egg-info/
-examples/submissions/CAV2021/data/MNIST/
+**/MNIST
 *.pyc
 *.ipynb_checkpoints/
+.idea/*

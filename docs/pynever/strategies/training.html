@@ -210,8 +210,12 @@ class AdamTraining(TrainingStrategy):
         training_set = dataset.get_training_set()
 
         # If a checkpoint exist, we load the checkpoint of interest
-        checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
-        best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+        # checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
+        # best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+
+        checkpoints_path = net.identifier + &#39;.pth.tar&#39;
+        best_model_path = net.identifier + &#39;_best.pth.tar&#39;
+
         if os.path.isfile(checkpoints_path):
 
             print(&#34;=&gt; loading checkpoint &#39;{}&#39;&#34;.format(checkpoints_path))
@@ -475,8 +479,12 @@ class AdamTrainingRegression(TrainingStrategy):
         training_set = dataset.get_training_set()
 
         # If a checkpoint exist, we load the checkpoint of interest
-        checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
-        best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+        # checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
+        # best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+
+        checkpoints_path = net.identifier + &#39;.pth.tar&#39;
+        best_model_path = net.identifier + &#39;_best.pth.tar&#39;
+
         if os.path.isfile(checkpoints_path):
 
             print(&#34;=&gt; loading checkpoint &#39;{}&#39;&#34;.format(checkpoints_path))
@@ -825,8 +833,12 @@ argument.</p></div>
         training_set = dataset.get_training_set()
 
         # If a checkpoint exist, we load the checkpoint of interest
-        checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
-        best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+        # checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
+        # best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+
+        checkpoints_path = net.identifier + &#39;.pth.tar&#39;
+        best_model_path = net.identifier + &#39;_best.pth.tar&#39;
+
         if os.path.isfile(checkpoints_path):
 
             print(&#34;=&gt; loading checkpoint &#39;{}&#39;&#34;.format(checkpoints_path))
@@ -1190,8 +1202,12 @@ argument.</p></div>
         training_set = dataset.get_training_set()
 
         # If a checkpoint exist, we load the checkpoint of interest
-        checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
-        best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+        # checkpoints_path = &#39;checkpoints/&#39; + net.identifier + &#39;.pth.tar&#39;
+        # best_model_path = &#39;checkpoints/&#39; + net.identifier + &#39;_best.pth.tar&#39;
+
+        checkpoints_path = net.identifier + &#39;.pth.tar&#39;
+        best_model_path = net.identifier + &#39;_best.pth.tar&#39;
+
         if os.path.isfile(checkpoints_path):
 
             print(&#34;=&gt; loading checkpoint &#39;{}&#39;&#34;.format(checkpoints_path))

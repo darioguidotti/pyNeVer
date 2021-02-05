@@ -182,8 +182,12 @@ class AdamTraining(TrainingStrategy):
         training_set = dataset.get_training_set()
 
         # If a checkpoint exist, we load the checkpoint of interest
-        checkpoints_path = 'checkpoints/' + net.identifier + '.pth.tar'
-        best_model_path = 'checkpoints/' + net.identifier + '_best.pth.tar'
+        # checkpoints_path = 'checkpoints/' + net.identifier + '.pth.tar'
+        # best_model_path = 'checkpoints/' + net.identifier + '_best.pth.tar'
+
+        checkpoints_path = net.identifier + '.pth.tar'
+        best_model_path = net.identifier + '_best.pth.tar'
+
         if os.path.isfile(checkpoints_path):
 
             print("=> loading checkpoint '{}'".format(checkpoints_path))
@@ -447,8 +451,12 @@ class AdamTrainingRegression(TrainingStrategy):
         training_set = dataset.get_training_set()
 
         # If a checkpoint exist, we load the checkpoint of interest
-        checkpoints_path = 'checkpoints/' + net.identifier + '.pth.tar'
-        best_model_path = 'checkpoints/' + net.identifier + '_best.pth.tar'
+        # checkpoints_path = 'checkpoints/' + net.identifier + '.pth.tar'
+        # best_model_path = 'checkpoints/' + net.identifier + '_best.pth.tar'
+
+        checkpoints_path = net.identifier + '.pth.tar'
+        best_model_path = net.identifier + '_best.pth.tar'
+
         if os.path.isfile(checkpoints_path):
 
             print("=> loading checkpoint '{}'".format(checkpoints_path))
