@@ -1,11 +1,13 @@
 import abc
-from pynever.tensor import Tensor
-import pynever.networks as networks
-from typing import List, Optional
-import pynever.strategies.abstraction as abst
-import pynever.nodes as nodes
 import time
+from typing import List, Optional
+
 import numpy as np
+
+import pynever.networks as networks
+import pynever.nodes as nodes
+import pynever.strategies.abstraction as abst
+from pynever.tensor import Tensor
 
 
 class Property(abc.ABC):
@@ -55,7 +57,6 @@ class LocalRobustnessProperty(Property):
     """
 
     def __init__(self, data: Tensor, target: int, targeted: bool, norm: str, epsilon: float, bounds: list):
-
         self.data = data
         self.target = target
         self.targeted = targeted
@@ -87,7 +88,6 @@ class NeVerProperty(Property):
 
     def __init__(self, in_coef_mat: Tensor, in_bias_mat: Tensor, out_coef_mat: List[Tensor],
                  out_bias_mat: List[Tensor]):
-
         self.in_coef_mat = in_coef_mat
         self.in_bias_mat = in_bias_mat
         self.out_coef_mat = out_coef_mat
@@ -125,11 +125,11 @@ class VerificationStrategy(abc.ABC):
             True is the neural network satisfy the property, False otherwise.
 
         """
+
         pass
 
 
 class NeverVerification(VerificationStrategy):
-
     """
     Class used to represent the Never verification strategy.
 
