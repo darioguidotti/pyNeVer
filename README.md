@@ -27,11 +27,11 @@ neural networks using the capabilities provided in the [utilities.py](pynever/ut
 The [conversion.py](pynever/strategies/conversion.py) provides the capabilities for the conversion of PyTorch and ONNX
 networks: therefore these kind of networks can be loaded using the respective frameworks and then converted to the
 internal representation used by __pyNeVer__. Examples of the loading of ONNX networks can be found in the scripts
-[mnist_experiment.py](examples/submissions/CAV2021/mnist_experiments.py) and
-[james_experiments.py](examples/submissions/CAV2021/james_experiments.py).  
+[mnist_experiment.py](examples/submissions/ATVA2021/mnist_experiments.py) and
+[james_experiments.py](examples/submissions/ATVA2021/james_experiments.py).  
 At present the properties for the verification and abstraction of the networks must be defined in python code following
 the specification which can be found in the documentation. Examples of the specification of the properties can be found
-in all the scripts in the directory examples/submissions/CAV2021/.
+in all the scripts in the directory examples/submissions/ATVA2021/.
 
 #### EXAMPLES
 **NB: All the scripts should be executed INSIDE the related directory!**  
@@ -45,11 +45,11 @@ fully connected neural networks with relu activation function. It also show how 
 layer and fully connected layers to make the networks compliant with the requirements of the verification and 
 abstraction modules.  
 
-* The directory examples/submissions/CAV2021 contains the experimental setup used for the experimental evaluation
-in our CAV2021 paper plus a novel experiment. The experiments can be easily replicated by executing the python scripts 
-[acas_experiment.py](examples/submissions/CAV2021/acas_experiments.py) and 
-[mnist_experiment.py](examples/submissions/CAV2021/mnist_experiments.py) from within the CAV2021/ directory. 
+* The directory examples/submissions/ATVA2021 contains the experimental setup used for the experimental evaluation
+in our ATVA2021 paper plus a novel experiment. The experiments can be easily replicated by executing the python scripts 
+[acas_experiment.py](examples/submissions/ATVA2021/acas_experiments.py) and 
+[mnist_experiment.py](examples/submissions/ATVA2021/mnist_experiments.py) from within the ATVA2021/ directory. 
 The log files will be generated and will be saved in the logs/ directory.  
 It is also possible to test the package on the script 
-[james_experiments.py](examples/submissions/CAV2021/james_experiments.py) which consider small fully connected neural
+[james_experiments.py](examples/submissions/ATVA2021/james_experiments.py) which consider small fully connected neural
 networks with Sigmoid activation functions.
